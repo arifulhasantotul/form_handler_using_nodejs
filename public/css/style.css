@@ -1,10 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,800;1,300;1,400;1,500;1,600;1,800&display=swap");
+
+:root {
+  --out_shadow: -14px -14px 22px #b5b9bf, 14px 14px 22px #ffffff;
+  --out_hover_shadow: inset -14px -14px 22px #b5b9bf,
+    inset 14px 14px 22px #ffffff;
+  --field_shadow: 0.9rem 0.9rem 1.9rem #a3b1c699,
+    -0.9rem -0.9rem 1.6rem #ffffff80;
+  --field_hover_shadow: inset -1rem -1rem 3rem 0 #ffffffb3,
+    inset 1rem 1rem 3rem 0 #00000033;
+  --register_btn_shadow: -0.7rem -0.7rem 2rem #ffffffb3,
+    0.7rem 0.7rem 2rem #00000033;
+  --register_hover_btn_shadow: inset -0.7rem -0.7rem 2rem #ffffffb3,
+    inset 0.7rem 0.7rem 2rem #00000033;
+  --light_white: #e0e5ec;
+}
 
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 }
 
 html {
@@ -12,33 +27,168 @@ html {
 }
 
 body {
-  width: 100%;
-  height: 100%;
   scroll-behavior: smooth;
-  background: lightslategray;
+}
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.form_wrapper {
+  width: 100%;
+  height: 100vh;
+  background: var(--light_white);
   display: grid;
   place-items: center;
-}
-#add_user_form {
-  text-align: center;
-}
-.user_container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  padding-top: 9rem;
 }
 
-.image_preview {
-  width: 15rem;
-  height: 15rem;
-  border: 0.2rem solid #ddd;
-  margin-top: 1.5rem;
+.main {
+  width: 60rem;
+  height: auto;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: var(--out_shadow);
+  background: linear-gradient(315deg, #caced4, #f0f5fd);
+  position: relative;
+}
+
+h1 {
+  color: #4c4b71;
+  text-align: center;
+  margin: 4rem 0 3rem 0;
+  letter-spacing: 0.1rem;
+  font-size: 3rem;
+}
+
+.text_field {
+  display: block;
+  width: 65%;
+  margin: 2rem auto;
+  background: var(--light_white);
+  border: 1px solid #ffffff80;
+  box-shadow: var(--field_shadow);
+  color: #456990;
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 1.5rem 3rem;
+  border-radius: 0.7rem;
+  outline: none;
+}
+
+.field_label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.field_label img {
+  margin: 0 0.3rem;
+}
+
+.text_field:hover {
+  box-shadow: var(--field_hover_shadow);
+}
+
+.text_field::placeholder {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #4a8383;
+}
+.text_field:focus::-webkit-input-placeholder {
+  color: #1abc9c;
+  font-size: 1.6rem;
+  font-weight: bold;
+  transform: translateY(-1.5rem);
+  -webkit-transform: translateY(-1.5rem);
+}
+.register_buttons {
+  width: 60%;
+  margin: 2rem auto;
+}
+.btn_register {
+  width: 45%;
+  padding: 1.5rem 1rem;
+  background: rgb(221, 220, 220);
+  border: none;
+  border-radius: 2.5rem;
+  color: #12fc12;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  box-shadow: var(--register_btn_shadow);
+  cursor: pointer;
+  float: left;
+}
+.btn_register.res {
+  float: right;
+  color: #eb5758;
+}
+.btn_register:hover {
+  box-shadow: var(--register_hover_btn_shadow);
+}
+
+#preview_container {
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  background: #e0e5ec;
+  box-shadow: -14px -14px 22px #b5b9bf, 14px 14px 22px #ffffff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #4a8383;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  color: #ccc;
+  position: absolute;
+  left: 50%;
+  top: -17%;
+  transform: translate(-50%, -17%);
+  overflow: hidden;
 }
-.image_preview_img {
+#preview_container:hover {
+  box-shadow: var(--out_hover_shadow);
+}
+
+#preview_container .image_preview {
   display: none;
   height: 100%;
+}
+
+@media (max-width: 1200px) {
+  .form_wrapper {
+    padding-top: 12rem;
+  }
+}
+
+/* responsive for smaller than 600px */
+@media (max-width: 600px) {
+  .form_wrapper {
+    padding-top: 15rem;
+    height: 100%;
+  }
+
+  .main {
+    width: 90%;
+  }
+
+  .text_field {
+    width: 90%;
+    padding: 1.5rem 2rem;
+  }
+
+  .register_buttons {
+    width: 80%;
+    margin: 2rem auto;
+  }
+  .btn_register {
+    width: 45%;
+  }
+
+  #preview_container {
+    width: 15rem;
+    height: 15rem;
+  }
 }
