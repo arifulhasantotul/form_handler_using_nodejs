@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <h1>Add User</h1>
+    <form
+      method="post"
+      action="/users"
+      enctype="multipart/form-data"
+      id="add_user_form"
+    >
+      <input type="text" name="name" placeholder="name" />
+      <br />
+      <input type="text" name="email" placeholder="email" />
+      <br />
+      <input type="file" name="avatar" id="avatar" />
+      <br />
+      <div class="image_preview" id="image_preview">
+        <img src="" alt="Image Preview" class="image_preview_img" />
+        <span class="image_preview_text">Image Preview</span>
+      </div>
+      <input type="submit" value="Submit" />
+    </form>
+
+    <h1>Available Users</h1>
+    <section class="user_container">
+      <% users.forEach((user) => { %>
+      <article id="<%= user._id %>">
+        <h3>Name: <%= user.name %></h3>
+        <img src="<%= user.avatar %>" alt="" />
+      </article>
+      <% }) %>
+    </section>
+
+    <!-- js -->
+    <script>
+      const form = document.getElementById("add_user_form");
+      const avatarImage = document.getElementById("avatar");
+      const previewContainer = document.getElementById("image_preview");
+      const previewImage = previewContainer.querySelector(".image_preview_img");
+      const previewDefaultText = previewContainer.querySelector(
+        ".image_preview_text"
+      );
+
+      avatarImage.addEventListener("change", function () {
+        const file = this.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+
+          previewDefaultText.style.display = "none";
+          previewImage.style.display = "block";
+
+          reader.addEventListener("load", function () {
+            previewImage.setAttribute("src", this.result);
+          });
+
+          reader.readAsDataURL(file);
+        } else {
+          previewDefaultText.style.display = null;
+          previewImage.style.display = null;
+          previewImage.setAttribute("src", "");
+        }
+      });
+
+      form.onsubmit = async function (e) {
+        try {
+          e.preventDefault();
+
+          // prepare the form data
+          const formData = new FormData(form);
+          console.log("formData", formData);
+          // send the request to server
+          const response = await fetch("/users", {
+            method: "POST",
+            body: formData,
+          });
+
+          // get response
+          const result = await response.json();
+          console.log("result", result);
+
+          setTimeout(() => {
+            location.reload();
+          }, 1500);
+        } catch (err) {
+          console.log("error", err);
+        }
+      };
+    </script>
+  </body>
+</html>
